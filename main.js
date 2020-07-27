@@ -3,12 +3,13 @@
 
 /*----- app's state (variables) -----*/
 let cards; // (0,12) diamonds, (13,25) hearts, (26,38) spades, (39,51) clubs
-let deck;
+let deck,b,d;
 let move=0;
 let timer = [0,0,0,0];
 let interval;
 let timerRunning = false;
 let clickedCard;
+let push=0;
 /*----- cached element references -----*/
 
 let backPile=document.querySelector(".backPile");
@@ -17,7 +18,15 @@ let resetBtn=document.querySelector(".resetBtn");
 let time=document.querySelector(".time");
 let moveCards=document.querySelector(".moves");
 let ul= document.querySelectorAll('ul');
-let main= document.getElementById("main");
+let main= document.querySelector(".main");
+let firstMR= document.querySelector(".firstMR");
+let secondMR= document.querySelector(".secondMR");
+let thirdMR= document.querySelector(".thirdMR");
+let fourthMR= document.querySelector(".fourthMR");
+let fifthMR= document.querySelector(".fifthMR");
+let sixthMR= document.querySelector(".sixthMR");
+let seventhMR= document.querySelector(".seventhMR");
+
 
 
 
@@ -26,7 +35,14 @@ let main= document.getElementById("main");
 backPile.addEventListener("click", backPileFun());
 frontPile.addEventListener("click", frontPileFun());
 resetBtn.addEventListener("click", reset());
-main.addEventListener("click", clickingCards);
+firstMR.addEventListener("click", clickingCards);
+secondMR.addEventListener("click", clickingCards);
+thirdMR.addEventListener("click", clickingCards);
+fourthMR.addEventListener("click", clickingCards);
+fifthMR.addEventListener("click", clickingCards);
+sixthMR.addEventListener("click", clickingCards);
+seventhMR.addEventListener("click", clickingCards);
+main.addEventListener("click", startingTime);
 
 /*----- functions -----*/
 function init() {
@@ -65,6 +81,12 @@ function runTimer() {
     timer[2] = Math.floor(timer[3] - (timer[1] * 100) - (timer[0] * 6000));
 }
 
+function startingTime(evt){
+  clickedCard = evt.target;
+  if(!clickedCard.classList.contains("card")) {
+  return;}
+  interval = setInterval(runTimer, 10);
+}
 // dealing the cards at the top left corner
 function backPileFun(event){
   if (backPile.length > 0) {
@@ -137,10 +159,6 @@ function dealing(newDeck){
 
       if(row===column){
           // faced up card
-          console.log("column")
-          console.log(column)
-          console.log("a")
-          console.log(a)
 
           li.classList.remove("back");
           li.classList.add(a);
@@ -148,26 +166,48 @@ function dealing(newDeck){
       }
     }
   }
-
 }
 
+// clicking two cards
 function clickingCards(evt){
 
   clickedCard = evt.target;
   if(!clickedCard.classList.contains("card")) {
   return;}
+
+  let a;
   for(let i=0; i<=13; i++){
-    let a="h"+i;
-    console.log(a);
+
+    // for hearts
+     a="h"+i;
     if(clickedCard.classList.contains(a)){
         b=a;
         i=13}
+    // for diamonds
+     a="d"+i;
+    if(clickedCard.classList.contains(a)){
+        b=a;
+        i=13}
+  // for spades
+     a="s"+i;
+    if(clickedCard.classList.contains(a)){
+        b=a;
+        i=13}
+  // for clubs
+       a="c"+i;
+      if(clickedCard.classList.contains(a)){
+          b=a;
+          i=13}
   }
-  let charSuit= b.charAt(0);
-  let value= b-charSuit;
-  console.log(b);
-  return b;
+  let charSuit= b.slice(0,1);
+  let value= b.substring(1);
+  console.log("charSuit");
+  console.log(charSuit);
+  console.log("value");
+  console.log(value);
+  return charSuit, value;
 };
+
 // Reset everything:
     function reset() {
         clearInterval(interval);
