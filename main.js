@@ -10,10 +10,14 @@ let interval;
 let timerRunning = false;
 let clickedCard;
 let push=0;
+let frontPile=[];
+let hasClickedCard=false;
+let previousPosition,currentPosition,clickedCard1;
+
 /*----- cached element references -----*/
 
 let backPile=document.querySelector(".backPile");
-let frontPile=document.querySelector(".frontPile");
+let frontPileClass=document.querySelector(".frontPile");
 let resetBtn=document.querySelector(".resetBtn");
 let time=document.querySelector(".time");
 let moveCards=document.querySelector(".moves");
@@ -26,23 +30,41 @@ let fourthMR= document.querySelector(".fourthMR");
 let fifthMR= document.querySelector(".fifthMR");
 let sixthMR= document.querySelector(".sixthMR");
 let seventhMR= document.querySelector(".seventhMR");
+let top1=document.querySelector(".top1");
+let top2= document.querySelector(".top2");
+let top3 = document.querySelector(".top3");
+let top4 = document.querySelector(".top4");
+let stock= document.querySelector(".stock");
 
-
-
+let newDeck= init();
+let topDeck=newDeck.slice(28);
 
 /*----- event listeners -----*/
 
-backPile.addEventListener("click", backPileFun());
-frontPile.addEventListener("click", frontPileFun());
-resetBtn.addEventListener("click", reset());
-firstMR.addEventListener("click", clickingCards);
-secondMR.addEventListener("click", clickingCards);
-thirdMR.addEventListener("click", clickingCards);
-fourthMR.addEventListener("click", clickingCards);
-fifthMR.addEventListener("click", clickingCards);
-sixthMR.addEventListener("click", clickingCards);
-seventhMR.addEventListener("click", clickingCards);
-main.addEventListener("click", startingTime);
+backPile.addEventListener("click", backPileFun);
+frontPileClass.addEventListener("click", clickingCards);
+resetBtn.addEventListener("click", reset);
+let firstMREvt= firstMR.addEventListener("click", clickingCards);
+let secondMREvt= secondMR.addEventListener("click", clickingCards);
+let thirdMREvt= thirdMR.addEventListener("click", clickingCards);
+let fourthMREvt= fourthMR.addEventListener("click", clickingCards);
+let fifthMREvt= fifthMR.addEventListener("click", clickingCards);
+let sixthMREvt= sixthMR.addEventListener("click", clickingCards);
+let seventhMREvt= seventhMR.addEventListener("click", clickingCards);
+top1.addEventListener("click", clickingCards);
+top2.addEventListener("click", clickingCards);
+top3.addEventListener("click", clickingCards);
+top4.addEventListener("click", clickingCards);
+
+
+// main.addEventListener("click", startingTime);
+
+/*----- calling functions -----*/
+
+
+dealing(newDeck);
+
+
 
 /*----- functions -----*/
 function init() {
@@ -50,16 +72,6 @@ function init() {
    deck = shuffle(cards);
   console.log(deck);
   return deck;
-}
-
-// start the time................
-function start() {
-
-    if (!timerRunning) {
-        timerRunning = true;
-        interval = setInterval(runTimer, 10);
-    }
-
 }
 
 // Add leading zero to numbers 9 or below (purely for aesthetics):
@@ -81,34 +93,40 @@ function runTimer() {
     timer[2] = Math.floor(timer[3] - (timer[1] * 100) - (timer[0] * 6000));
 }
 
+// start the time
 function startingTime(evt){
   clickedCard = evt.target;
   if(!clickedCard.classList.contains("card")) {
   return;}
   interval = setInterval(runTimer, 10);
 }
+
+
 // dealing the cards at the top left corner
-function backPileFun(event){
-  if (backPile.length > 0) {
-      frontPile.unshift(backPile.shift())
-      moves++
-      render();
-  }
-  else fillipingCards();
+function backPileFun(){
+    moveFun();
+    console.log("topDeck");
+    console.log(topDeck);
+  frontPileClass.classList.remove(a);  //a=suits(topDeck[0]);
+    if (topDeck.length > 0) {
+      a=suits(topDeck[0]);
+      frontPile.unshift(topDeck.shift());
+      console.log("a");
+      console.log(a);
+      frontPileClass.classList.add(a);
+      console.log("frontPile");
+      console.log(frontPile);
+
+
+}
+  else fillipingCards(topDeck);
 }
 
-function fillipingCards() {
-    if (backPile.length === 0) {
+function fillipingCards(newDeck) {
+    if (newDeck.length === 0) {
         for (var i = frontPile.length; i > 0; i--) {
-            backPile.unshift(frontPile.shift());
+            newDeck.unshift(frontPile.shift());
         }};
-}
-
-function frontPileFun(event){
-  if (frontPile.length > 0) {
-      firstPile.length = 0;
-      firstPile.unshift(frontPile[0]); //change the firstPile
-  }
 }
 
 // shuffling the cards
@@ -126,8 +144,8 @@ return newDeck;
  }
 // adding the suits
 function suits(card){
-  console.log("at suit function...")
-
+  // console.log("at suit function...")
+let a;
       if(card>0 && card<=13){
         a="d"+card;
     } else if(card>13 && card<=26){
@@ -151,15 +169,16 @@ function dealing(newDeck){
     for(let row=1; row<=7; row++){
     let li = document.createElement('li');
        li.textContent = newDeck[i];
-      i++;
       a=suits(newDeck[i]);
       li.classList.add("card");
       li.classList.add("back");
       ul[column-1].appendChild(li);
-
+console.log("li");
+console.log(li);
+console.log("newDeck[i]");
+console.log(newDeck[i]);
+i++;
       if(row===column){
-          // faced up card
-
           li.classList.remove("back");
           li.classList.add(a);
           row=7;
@@ -170,11 +189,48 @@ function dealing(newDeck){
 
 // clicking two cards
 function clickingCards(evt){
-
   clickedCard = evt.target;
   if(!clickedCard.classList.contains("card")) {
   return;}
+  console.log("frontPile in clickingCards function");
+  console.log(frontPile);
+  let b= gettingTheSuitsValue(clickedCard);
 
+  let charSuit= b.slice(0,1);
+  let value= b.substring(1);
+  let wholeClass=b;
+  class SingleCard{
+    constructor(charSuit, value, clickedCard1){
+      this.charSuit=charSuit;
+      this.value=value;
+      this.clickedCard1=clickedCard1;
+      this.wholeClass=wholeClass;
+    }
+  }
+  if(!hasClickedCard && !clickedCard.classList.contains("back")){
+     previousPosition = new SingleCard(b.slice(0,1), b.substring(1), evt.target, b);
+     clickedCard.classList.add("outline")
+     console.log("previousPosition");
+     console.log(previousPosition);
+     console.log("previousPosition click");
+     console.log(previousPosition.clickedCard1);
+     hasClickedCard=true;
+  } else if(hasClickedCard){
+      previousPosition.clickedCard1.classList.remove("outline")
+      currentPosition = new SingleCard(b.slice(0,1), b.substring(1), evt.target, b);
+      compare(previousPosition, currentPosition);
+      hasClickedCard=false;
+      previousPosition=undefined;
+      currentPosition=undefined;
+
+}
+  winning();
+  return push, charSuit, value;
+};
+
+//
+
+function gettingTheSuitsValue(){
   let a;
   for(let i=0; i<=13; i++){
 
@@ -199,14 +255,98 @@ function clickingCards(evt){
           b=a;
           i=13}
   }
-  let charSuit= b.slice(0,1);
-  let value= b.substring(1);
-  console.log("charSuit");
-  console.log(charSuit);
-  console.log("value");
-  console.log(value);
-  return charSuit, value;
-};
+  return b;
+}
+// Comparing function
+  function compare(previousPosition, currentPosition){
+    // writting for A->k
+    if(previousPosition.charSuit==currentPosition.charSuit){
+      stocking(previousPosition, currentPosition);
+    }
+    // using cards into the game
+    else if((previousPosition.charSuit=="s" || previousPosition.charSuit=="c") && (currentPosition.charSuit=="h" || currentPosition.charSuit=="d") ||
+    (previousPosition.charSuit=="h" || previousPosition.charSuit=="d") && (currentPosition.charSuit=="s" || currentPosition.charSuit=="c")){
+     let curVal=currentPosition.value;
+     let preVal=parseInt(previousPosition.value)+1;
+      if(curVal==preVal){
+        let x =currentPosition.clickedCard1.parentElement;
+        let z =previousPosition.clickedCard1;
+        // from top left corner
+        if(z.classList.contains("frontPile")){
+          let shiftedVal = frontPile.shift();
+          let shiftedSuit= suits(shiftedVal);
+          let li = document.createElement('li');
+          li.classList.add(shiftedSuit);
+          li.classList.add("card");
+          x.appendChild(li);
+          frontPileClass.classList.remove(shiftedSuit)
+          frontPileClass.classList.add(suits(frontPile[0]));
+          moveFun()
+          return frontPile;
+       }
+       // using middle row cards
+       else {
+        let child=previousPosition.clickedCard1;
+        let y =previousPosition.clickedCard1.parentElement;
+
+        y.removeChild(child);
+        x.appendChild(child);
+        moveFun()
+        filippingMR(y)
+      }
+      }
+    }
+
+  }
+
+// filipping the middleRow cards
+function filippingMR(y){
+  if(y.lastChild.classList.contains("back")){
+      y.lastChild.classList.remove("back");
+      y.lastChild.classList.add(suits(y.lastChild.textContent));
+  }
+}
+
+// building the 4 foundation cards
+function stocking(previousPosition, currentPosition){
+
+  let curVal=currentPosition.value;
+  let preVal=parseInt(previousPosition.value)-1;
+  if(curVal==preVal){
+    let z =previousPosition.clickedCard1;
+    let x =currentPosition.clickedCard1;
+    if(z.classList.contains("frontPile")){
+      let shiftedVal = frontPile.shift();
+      let shiftedSuit= suits(shiftedVal);
+      frontPileClass.classList.remove(shiftedSuit)
+      frontPileClass.classList.add(suits(frontPile[0]));
+      x.classList.remove(currentPosition.wholeClass);
+      x.classList.add(shiftedSuit);
+      moveFun()
+      return frontPile;
+      }
+      else{
+      let y =z.parentElement; //ul
+      let child=previousPosition.clickedCard1;
+      x.classList.remove(currentPosition.wholeClass);
+      x.classList.add(previousPosition.wholeClass);
+      y.classList.remove(previousPosition.wholeClass);
+      y.removeChild(child);
+      moveFun()
+      filippingMR(y)
+    }
+}
+}
+
+function winning(){
+if((top1.classList.contains("d13")) && (top2.classList.contains("c13")) &&
+  (top3.classList.contains("h13")) && (top4.classList.contains("s13")) ){
+  console.log("you won");
+}
+else {
+  return;
+}
+}
 
 // Reset everything:
     function reset() {
@@ -214,20 +354,16 @@ function clickingCards(evt){
         interval = null;
         timer = [0,0,0,0];
         timerRunning = false;
-
         time.innerHTML = "Time: 00:00:00";
+        moveCards.innerHTML = "Moves: 0";
+        deck=null;
+        init();
+        dealing(newDeck)
 
     }
 // count the number of moves
     function moveFun(){
       move++;
       console.log(move);
-      moveCards.innerHTML = "Move " + move;
+      moveCards.innerHTML = "Moves: " + move;
     }
-
-/*----- calling functions -----*/
-
-let newDeck= init();;
-dealing(newDeck);
-
-moveFun();

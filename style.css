@@ -18,8 +18,8 @@ body{
   grid-column: 1/8;
   grid-row: 1/2;
   text-align: center;
-  margin: 0 auto;
-  justify-content: center;
+  margin-left: 50px;
+  /* justify-content: center; */
 
 }
 
@@ -60,7 +60,11 @@ body{
   grid-row: 2/3;
   text-align: center;
   margin: 0 auto;
-  height: 600px;
+  height: 670px;
+  /* justify-content: center; */
+}
+.card.is-flipped {
+  transform: rotateY(180deg);
 }
 
 ul{
@@ -71,12 +75,11 @@ ul{
 }
 /* footer */
 .footer{
-  flex-grow: 1;
   display: grid;
   grid-template-columns: repeat(3, auto);
   color: white;
   margin: 0 auto;
-  justify-content:space-around;
+  justify-content: flex-end;
 }
 .time{
   grid-column: 1/2;
