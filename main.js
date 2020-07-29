@@ -13,6 +13,7 @@ let push=0;
 let frontPile=[];
 let hasClickedCard=false;
 let previousPosition,currentPosition,clickedCard1;
+let arr=[];
 
 /*----- cached element references -----*/
 
@@ -107,19 +108,44 @@ function backPileFun(){
     moveFun();
     console.log("topDeck");
     console.log(topDeck);
-  frontPileClass.classList.remove(a);  //a=suits(topDeck[0]);
     if (topDeck.length > 0) {
-      a=suits(topDeck[0]);
+        while(arr.length>0){
+          frontPileClass.classList.remove(arr[0]);
+          arr.pop();
+        }
+        // console.log("frontPileClass.classList");
+        // console.log(frontPileClass.classList.length);
+        // console.log("frontPileClass.classList [0]");
+        // console.log(frontPileClass.classList[0]);
+        // console.log("frontPileClass.classList [1]");
+        // console.log(frontPileClass.classList[1]);
+        // console.log("frontPileClass.classList [2]");
+        // console.log(frontPileClass.classList[2]);
+        // console.log("frontPileClass.classList [3]");
+        // console.log(frontPileClass.classList[3]);
+        // console.log("frontPileClass.classList [4]");
+        // console.log(frontPileClass.classList[4]);
+      if(frontPileClass.classList.length>3){
+      console.log("in frontPileClass.classList 4");
+        // frontPileClass.classList.remove(suits(frontPile[0]));
+        let a = frontPileClass.classList[3]
+        frontPileClass.classList.remove(a)
+      }
+      arr.push(suits(topDeck[0]));
       frontPile.unshift(topDeck.shift());
+      console.log("a[0]");
+      console.log(arr[0]);
       console.log("a");
-      console.log(a);
-      frontPileClass.classList.add(a);
+      console.log(arr);
+      frontPileClass.classList.add(arr);
       console.log("frontPile");
       console.log(frontPile);
+      console.log("frontPile class list");
+      console.log(frontPileClass.classList);
 
 
 }
-  else fillipingCards(topDeck);
+    else fillipingCards(topDeck);
 }
 
 function fillipingCards(newDeck) {
@@ -139,6 +165,7 @@ function fillipingCards(newDeck) {
   cards.splice(num,1);
   i--;
 }
+console.log("newDeck");
 console.log(newDeck);
 return newDeck;
  }
@@ -163,7 +190,7 @@ let a;
 
 // dealing the cards in the middle row
 function dealing(newDeck){
-  console.log("in dealing card function");
+  console.log("in dealing card function ...");
   let i=0
   for(let column=1; column<=7; column++){
     for(let row=1; row<=7; row++){
@@ -173,11 +200,7 @@ function dealing(newDeck){
       li.classList.add("card");
       li.classList.add("back");
       ul[column-1].appendChild(li);
-console.log("li");
-console.log(li);
-console.log("newDeck[i]");
-console.log(newDeck[i]);
-i++;
+      i++;
       if(row===column){
           li.classList.remove("back");
           li.classList.add(a);
@@ -195,7 +218,6 @@ function clickingCards(evt){
   console.log("frontPile in clickingCards function");
   console.log(frontPile);
   let b= gettingTheSuitsValue(clickedCard);
-
   let charSuit= b.slice(0,1);
   let value= b.substring(1);
   let wholeClass=b;
@@ -210,10 +232,6 @@ function clickingCards(evt){
   if(!hasClickedCard && !clickedCard.classList.contains("back")){
      previousPosition = new SingleCard(b.slice(0,1), b.substring(1), evt.target, b);
      clickedCard.classList.add("outline")
-     console.log("previousPosition");
-     console.log(previousPosition);
-     console.log("previousPosition click");
-     console.log(previousPosition.clickedCard1);
      hasClickedCard=true;
   } else if(hasClickedCard){
       previousPosition.clickedCard1.classList.remove("outline")
@@ -222,7 +240,6 @@ function clickingCards(evt){
       hasClickedCard=false;
       previousPosition=undefined;
       currentPosition=undefined;
-
 }
   winning();
   return push, charSuit, value;
@@ -258,10 +275,6 @@ function gettingTheSuitsValue(clickedCard){
 }
 // Comparing function
   function compare(previousPosition, currentPosition){
-    console.log("current value");
-    console.log(currentPosition.value);
-    console.log("current char");
-    console.log(currentPosition.charSuit);
     let x =currentPosition.clickedCard1.parentElement;
     let countcurentUL= x.querySelectorAll("li").length;
     let z =previousPosition.clickedCard1;
@@ -274,24 +287,9 @@ function gettingTheSuitsValue(clickedCard){
      let curVal=currentPosition.value;
      let preVal=parseInt(previousPosition.value)+1;
       if(curVal==preVal){
-        // let x =currentPosition.clickedCard1.parentElement;
-        // let countcurentUL= x.querySelectorAll("li").length;
-        // let z =previousPosition.clickedCard1;
-        // let y =z.parentElement;
         // from top left corner
-        if(z.classList.contains("frontPile")){
-          let shiftedVal = frontPile.shift();
-          let shiftedSuit= suits(shiftedVal);
-          let li = document.createElement('li');
-          li.classList.add(shiftedSuit);
-          li.classList.add("card");
-          x.appendChild(li);
-          frontPileClass.classList.remove(shiftedSuit)
-          frontPileClass.classList.add(suits(frontPile[0]));
-          moveFun()
-          return frontPile;
-       }
-       // if preSelection isn't the last li
+      if(z.classList.contains("frontPile")){
+        dealingFromTLtoMR(z,x)}
        else if(z.nextSibling){
          moveWholeLi(z,x,y,countcurentUL)
        }
@@ -299,17 +297,6 @@ function gettingTheSuitsValue(clickedCard){
        else if(previousPosition.value != 0) {
         y.removeChild(z);
         x.appendChild(z);
-        console.log("y");
-        console.log(y);
-        let aa= y.textContent;
-        if(aa==null){
-        console.log("null content");
-        console.log(aa);
-      }
-      if(aa==""){
-      console.log(" aa content");
-      console.log(aa);
-    }
         moveFun()
         filippingMR(y)
       }
@@ -318,22 +305,44 @@ function gettingTheSuitsValue(clickedCard){
     // writting for moving kings into empty spots
     else if(previousPosition.value=="13" &&
         (currentPosition.clickedCard1.classList.contains("card")  )) {
-          console.log("in empty spots");
-          console.log("in empty spots");
           if(z.nextSibling){
+            if(z.classList.contains("frontPile")){
+              dealingFromTLtoMR(z,x)
+              // x.appendChild(z);
+              // y.removeChild(z);
+            }else{
             moveWholeLi(z,x,y,countcurentUL)
+            filippingMR(y)
+            }
           }else{
           y.removeChild(z);
           x.appendChild(z);
+          filippingMR(y)
         }
+        moveFun()
+
           currentPosition.clickedCard1.remove()
         }
     // writting for A->k
     else if(previousPosition.charSuit===currentPosition.charSuit){
       stocking(previousPosition, currentPosition);
-      console.log("here");
     }
   }
+
+  function dealingFromTLtoMR(z,x){
+  // if(z.classList.contains("frontPile"))
+    let shiftedVal = frontPile.shift();
+    let shiftedSuit= suits(shiftedVal);
+    let li = document.createElement('li');
+    li.classList.add(shiftedSuit);
+    li.classList.add("card");
+    x.appendChild(li);
+    frontPileClass.classList.remove(shiftedSuit)
+    frontPileClass.classList.add(suits(frontPile[0]));
+    moveFun()
+    return frontPile;
+  }
+
 
 
 // filipping the middleRow cards
@@ -354,6 +363,8 @@ function stocking(previousPosition, currentPosition){
   let curVal=currentPosition.value;
   let preVal=parseInt(previousPosition.value)-1;
   if(curVal==preVal){
+    console.log("frontPile in stocking function begining...");
+    console.log(frontPile);
     let z =previousPosition.clickedCard1;
     let x =currentPosition.clickedCard1;
     if(z.classList.contains("frontPile")){
@@ -364,6 +375,8 @@ function stocking(previousPosition, currentPosition){
       x.classList.remove(currentPosition.wholeClass);
       x.classList.add(shiftedSuit);
       moveFun()
+      console.log("frontPile in stocking function end...");
+      console.log(frontPile);
       return frontPile;
       }
       else{
@@ -395,6 +408,7 @@ function winning(){
 if((top1.classList.contains("d13")) && (top2.classList.contains("c13")) &&
   (top3.classList.contains("h13")) && (top4.classList.contains("s13")) ){
   console.log("you won");
+  startConfetti();
 }
 else {
   return;
