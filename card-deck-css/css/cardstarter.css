@@ -394,6 +394,7 @@
     background-image: url("../images/backs/blue-half.png");
     width: 4.0em;
     height: 35px;
+    margin-bottom:-15px;
   }
 
 /* Re-orients the cards for different directions. While

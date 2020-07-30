@@ -37,12 +37,13 @@ let top3 = document.querySelector(".top3");
 let top4 = document.querySelector(".top4");
 let stock= document.querySelector(".stock");
 let winCar = document.querySelector(".winCar");
-
+let h1= document.querySelector("h1")
 let newDeck= init();
 let topDeck=newDeck.slice(28);
 console.log("topdeck");
 console.log(topDeck);
-
+let name = prompt("Hello there, please enter your name:")
+h1.textContent="Welcome to Solitaire, " + name
 /*----- event listeners -----*/
 
 backPile.addEventListener("click", backPileFun);
@@ -80,28 +81,18 @@ function init() {
 
 // playing with the winning array
 function winningArr(){
-  console.log("ul");
-  console.log(ul);
-  console.log("in winning arra");
   if(move==0){
     ul.forEach(function(singleUL){
-      console.log("ul before null");
-      console.log(singleUL);
       // singleUL=null;
       singleUL.textContent="";
-      console.log("ul after null");
-      console.log(singleUL);
     });
-    console.log("in winning arra if");
     newDeck=[1,14,27,15,2,40,3,16,28,41,42,4,17,30,29,6,19,5,18,31,43,46,20,7,33,45,44,32,8,21,34,47,9,22,35,48,10,23,36,49,11,24,37,50,12,25,38,51,13,26,39,52];
     topDeck=newDeck.slice(28);
-    let aa=0
-
-
     setTimeout(dealing(newDeck),1000);
   }
   return newDeck, topDeck;
 }
+
 // Add leading zero to numbers 9 or below (purely for aesthetics):
 function leadingZero(time) {
     if (time <= 9) {
@@ -123,45 +114,38 @@ function runTimer() {
 
 // start the time
 function startingTime(evt){
-  // clickedCard = evt.target;
-  // if(!clickedCard.classList.contains("card")) {
-  // return;}
   interval = setInterval(runTimer, 10);
 }
-
 
 // dealing the cards at the top left corner
 function backPileFun(){
     moveFun();
-    console.log("topDeck");
-    console.log(topDeck);
     if (topDeck.length > 0) {
+      if(!backPile.classList.contains("back")){
+        backPile.classList.add("back");
+      }
+      if(topDeck.length==1){
+        console.log("in ==1");
+        backPile.classList.remove("back");
+      }
         while(arr.length>0){
           frontPileClass.classList.remove(arr[0]);
           arr.pop();
         }
       if(frontPileClass.classList.length>3){
-      console.log("in frontPileClass.classList 4");
         let a = frontPileClass.classList[3]
         frontPileClass.classList.remove(a)
       }
       arr.push(suits(topDeck[0]));
       frontPile.unshift(topDeck.shift());
-      console.log("a[0]");
-      console.log(arr[0]);
-      console.log("a");
-      console.log(arr);
       frontPileClass.classList.add(arr);
-      console.log("frontPile");
-      console.log(frontPile);
-      console.log("frontPile class list");
-      console.log(frontPileClass.classList);
-
-
+console.log("topdeck");
+console.log(topDeck.length);
 }
     else fillipingCards(topDeck);
 }
 
+// functions to filip the cards
 function fillipingCards(newDeck) {
     if (newDeck.length === 0) {
         for (var i = frontPile.length; i > 0; i--) {
@@ -307,8 +291,12 @@ function gettingTheSuitsValue(clickedCard){
        else if(z.nextSibling && !z.classList.contains("stock")){
          moveWholeLi(z,x,y,countcurentUL)
        }
+       // from foundation cards to middle rows
+       else if (z.classList.contains("stock")){
+         foundationToMR(z,x)
+         moveFun()
        // using middle row cards
-       else if(previousPosition.value != 0) {
+     }else if(previousPosition.value != 0) {
         y.removeChild(z);
         x.appendChild(z);
         moveFun()
@@ -323,8 +311,6 @@ function gettingTheSuitsValue(clickedCard){
           if(z.nextSibling){
             if(z.classList.contains("frontPile")){
               dealingFromTLtoMR(z,x)
-              // x.appendChild(z);
-              // y.removeChild(z);
             }else{
             moveWholeLi(z,x,y,countcurentUL)
             filippingMR(y)
@@ -342,6 +328,11 @@ function gettingTheSuitsValue(clickedCard){
     else if(previousPosition.charSuit===currentPosition.charSuit){
       stocking(previousPosition, currentPosition);
     }
+    // // from foundation cards to middle rows
+    // else if(previousPosition.clickedCard1.contains("stock")){
+    //   foundationToMR(z,x)
+    //   moveFun()
+    // }
   }
 
   function dealingFromTLtoMR(z,x){
@@ -358,7 +349,19 @@ function gettingTheSuitsValue(clickedCard){
     return frontPile;
   }
 
-
+// choosing cards from foundation cards and play it in the middle row
+function foundationToMR(z,x){
+  let shiftedVal = z.classList[4];
+  let li = document.createElement('li');
+  console.log("shiftedVal");
+  console.log(shiftedVal);
+  li.classList.add(shiftedVal);
+  li.classList.add("card");
+  x.appendChild(li);
+  z.classList.remove(shiftedVal);
+  let oldClass= shiftedVal.slice(0,1)+(shiftedVal.substring(1)-1)
+  z.classList.add(oldClass);
+}
 
 // filipping the middleRow cards
 function filippingMR(y){
@@ -420,24 +423,15 @@ function moveWholeLi(z,x,y,countcurentUL){
 
 // winning
 function winning(){
-  console.log("in win function");
-  console.log("top1.classList.");
-  console.log(top1.classList);
-  console.log("top2.classList.");
-  console.log(top2.classList);
-  console.log("top3.classList.");
-  console.log(top3.classList);
-  console.log("top4.classList.");
-  console.log(top4.classList);
-
-if((top1.classList.contains("d13")) && (top2.classList.contains("c13")) &&
-  (top3.classList.contains("h13")) && (top4.classList.contains("s13")) ){
-  console.log("you won");
- confetti.start();
-}
-else {
-  return;
-}
+  if((top1.classList.contains("d13")) && (top2.classList.contains("c13")) &&
+    (top3.classList.contains("h13")) && (top4.classList.contains("s13")) ){
+    console.log("you won");
+    alert(`congratulations you won in ${move} moves`)
+   confetti.start();
+  }
+  else {
+    return;
+  }
 }
 
 // Reset everything:
