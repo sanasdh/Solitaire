@@ -4,6 +4,7 @@ body{
   grid-template-rows: auto auto auto;
   width: 100vw;
   background-image: radial-gradient(circle, #52BE80, #229954, #196F3D);
+  background-size: cover;
   text-align: center;
   font-family: 'Alegreya Sans', sans-serif;
   font-size: 18px;
