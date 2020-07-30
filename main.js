@@ -39,6 +39,8 @@ let stock= document.querySelector(".stock");
 
 let newDeck= init();
 let topDeck=newDeck.slice(28);
+console.log("topdeck");
+console.log(topDeck);
 
 /*----- event listeners -----*/
 
@@ -113,21 +115,8 @@ function backPileFun(){
           frontPileClass.classList.remove(arr[0]);
           arr.pop();
         }
-        // console.log("frontPileClass.classList");
-        // console.log(frontPileClass.classList.length);
-        // console.log("frontPileClass.classList [0]");
-        // console.log(frontPileClass.classList[0]);
-        // console.log("frontPileClass.classList [1]");
-        // console.log(frontPileClass.classList[1]);
-        // console.log("frontPileClass.classList [2]");
-        // console.log(frontPileClass.classList[2]);
-        // console.log("frontPileClass.classList [3]");
-        // console.log(frontPileClass.classList[3]);
-        // console.log("frontPileClass.classList [4]");
-        // console.log(frontPileClass.classList[4]);
       if(frontPileClass.classList.length>3){
       console.log("in frontPileClass.classList 4");
-        // frontPileClass.classList.remove(suits(frontPile[0]));
         let a = frontPileClass.classList[3]
         frontPileClass.classList.remove(a)
       }
@@ -290,7 +279,7 @@ function gettingTheSuitsValue(clickedCard){
         // from top left corner
       if(z.classList.contains("frontPile")){
         dealingFromTLtoMR(z,x)}
-       else if(z.nextSibling){
+       else if(z.nextSibling && !z.classList.contains("stock")){
          moveWholeLi(z,x,y,countcurentUL)
        }
        // using middle row cards
