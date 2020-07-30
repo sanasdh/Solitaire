@@ -11,15 +11,17 @@
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
     <script defer src="main.js"> </script>
-    <script defer src="confetti.js-master\confetti.js"></script>
-
+<script src="https://cdn.jsdelivr.net/gh/mathusummut/confetti.js/confetti.min.js"></script>
   </head>
 
 <body>
   <div class="main">
-    <div class="footer">
+    <div class="header">
       <div class="time">Time: 00:00:00</div>
       <div class="moves">Moves: 0</div>
+      <div id="winCar">
+        <button class="winCar"> Winning Cards </button>
+      </div>
       <div id="resetBtn">
         <button class="resetBtn"> Reset Button </button>
       </div>
@@ -32,6 +34,7 @@
     <div class="card stock top2 fifth c0"></div>
     <div class="card stock top3 sixth h0"></div>
     <div class="card stock top4 seventh s0"></div>
+
   </div>
 
   <div class="middleRow">

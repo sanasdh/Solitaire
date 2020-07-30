@@ -9,6 +9,30 @@ body{
   text-align: center;
 }
 
+/* header */
+.header{
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  color: white;
+  margin: 0 auto;
+  justify-content: flex-end;
+}
+.time{
+  grid-column: 1/2;
+  margin: 0 50px;
+}
+.moves{
+  grid-column: 2/3;
+  margin: 0 50px;}
+.winCar{
+  grid-column: 3/4;
+  margin: 0 40px;
+}
+.resetBtn{
+  grid-column: 4/5;
+  margin: 0 40px;
+}
+
 /* Top Row */
 .topRow{
   flex-grow: 1;
@@ -70,28 +94,14 @@ body{
 ul{
   list-style-type:none;
 }
+li{
+  padding:0;
+  margin: 0;
+}
 .borderr{
   border: 2px solid red;
 }
-/* footer */
-.footer{
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  color: white;
-  margin: 0 auto;
-  justify-content: flex-end;
-}
-.time{
-  grid-column: 1/2;
-  margin: 0 50px;
-}
-.moves{
-  grid-column: 2/3;
-  margin: 0 50px;}
-.resetBtn{
-  grid-column: 3/4;
-  margin: 0 40px;
-}
+
 /*
 @media query (min-width: 600){
   .firstow{

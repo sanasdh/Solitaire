@@ -36,6 +36,7 @@ let top2= document.querySelector(".top2");
 let top3 = document.querySelector(".top3");
 let top4 = document.querySelector(".top4");
 let stock= document.querySelector(".stock");
+let winCar = document.querySelector(".winCar");
 
 let newDeck= init();
 let topDeck=newDeck.slice(28);
@@ -58,7 +59,7 @@ top1.addEventListener("click", clickingCards);
 top2.addEventListener("click", clickingCards);
 top3.addEventListener("click", clickingCards);
 top4.addEventListener("click", clickingCards);
-
+winCar.addEventListener("click",winningArr);
 
 // main.addEventListener("click", startingTime);
 
@@ -77,6 +78,30 @@ function init() {
   return deck;
 }
 
+// playing with the winning array
+function winningArr(){
+  console.log("ul");
+  console.log(ul);
+  console.log("in winning arra");
+  if(move==0){
+    ul.forEach(function(singleUL){
+      console.log("ul before null");
+      console.log(singleUL);
+      // singleUL=null;
+      singleUL.textContent="";
+      console.log("ul after null");
+      console.log(singleUL);
+    });
+    console.log("in winning arra if");
+    newDeck=[1,14,27,15,2,40,3,16,28,41,42,4,17,30,29,6,19,5,18,31,43,46,20,7,33,45,44,32,8,21,34,47,9,22,35,48,10,23,36,49,11,24,37,50,12,25,38,51,13,26,39,52];
+    topDeck=newDeck.slice(28);
+    let aa=0
+
+
+    setTimeout(dealing(newDeck),1000);
+  }
+  return newDeck, topDeck;
+}
 // Add leading zero to numbers 9 or below (purely for aesthetics):
 function leadingZero(time) {
     if (time <= 9) {
@@ -98,9 +123,9 @@ function runTimer() {
 
 // start the time
 function startingTime(evt){
-  clickedCard = evt.target;
-  if(!clickedCard.classList.contains("card")) {
-  return;}
+  // clickedCard = evt.target;
+  // if(!clickedCard.classList.contains("card")) {
+  // return;}
   interval = setInterval(runTimer, 10);
 }
 
@@ -187,11 +212,11 @@ function dealing(newDeck){
        li.textContent = newDeck[i];
       a=suits(newDeck[i]);
       li.classList.add("card");
-      li.classList.add("back");
+      li.classList.add("back-half");
       ul[column-1].appendChild(li);
       i++;
       if(row===column){
-          li.classList.remove("back");
+          li.classList.remove("back-half");
           li.classList.add(a);
           row=7;
       }
@@ -293,7 +318,8 @@ function gettingTheSuitsValue(clickedCard){
     }
     // writting for moving kings into empty spots
     else if(previousPosition.value=="13" &&
-        (currentPosition.clickedCard1.classList.contains("card")  )) {
+        (currentPosition.clickedCard1.classList.contains("card") &&
+        !(currentPosition.clickedCard1.classList.contains("d12") || currentPosition.clickedCard1.classList.contains("h12") || currentPosition.clickedCard1.classList.contains("s12") || currentPosition.clickedCard1.classList.contains("c12")))) {
           if(z.nextSibling){
             if(z.classList.contains("frontPile")){
               dealingFromTLtoMR(z,x)
@@ -340,8 +366,8 @@ function filippingMR(y){
     let li = document.createElement('li');
     li.classList.add("card");
     let newLi = y.appendChild(li)
-  } else if(y.lastChild.classList.contains("back")){
-      y.lastChild.classList.remove("back");
+  } else if(y.lastChild.classList.contains("back-half")){
+      y.lastChild.classList.remove("back-half");
       y.lastChild.classList.add(suits(y.lastChild.textContent));
   }
 }
@@ -394,10 +420,20 @@ function moveWholeLi(z,x,y,countcurentUL){
 
 // winning
 function winning(){
+  console.log("in win function");
+  console.log("top1.classList.");
+  console.log(top1.classList);
+  console.log("top2.classList.");
+  console.log(top2.classList);
+  console.log("top3.classList.");
+  console.log(top3.classList);
+  console.log("top4.classList.");
+  console.log(top4.classList);
+
 if((top1.classList.contains("d13")) && (top2.classList.contains("c13")) &&
   (top3.classList.contains("h13")) && (top4.classList.contains("s13")) ){
   console.log("you won");
-  startConfetti();
+ confetti.start();
 }
 else {
   return;
@@ -410,16 +446,39 @@ else {
         interval = null;
         timer = [0,0,0,0];
         timerRunning = false;
+        move=0;
         time.innerHTML = "Time: 00:00:00";
         moveCards.innerHTML = "Moves: 0";
         deck=null;
-        init();
+        ul.forEach(function(singleUL){
+        singleUL.textContent=""
+      });
+      let a = frontPileClass.classList[3]
+      frontPileClass.classList.remove(a)
+      let top1class= top1.classList[5];
+      top1.classList.remove(top1class);
+      top1.classList.add("d0");
+      let top2class= top2.classList[5];
+      top2.classList.remove(top2class);
+      top2.classList.add("c0");
+      let top3class= top3.classList[5];
+      top3.classList.remove(top3class);
+      top3.classList.add("h0");
+      let top4class= top4.classList[5];
+      top4.classList.remove(top4class);
+      top4.classList.add("s0");
+       newDeck = shuffle(newDeck);
         dealing(newDeck)
+        topDeck=newDeck.slice(28);
+
 
     }
 // count the number of moves
     function moveFun(){
       move++;
       console.log(move);
+      if(move==1){
+        startingTime();
+      }
       moveCards.innerHTML = "Moves: " + move;
     }
