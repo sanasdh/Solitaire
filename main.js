@@ -16,6 +16,7 @@ let previousPosition,currentPosition,clickedCard1;
 let arr=[];
 let newDeck= init();
 let topDeck=newDeck.slice(28);
+let music=true;
 
 /*----- cached element references -----*/
 
@@ -41,8 +42,11 @@ let stock= document.querySelector(".stock");
 let winCar = document.querySelector(".winCar");
 let h1= document.querySelector("h1")
 let matchingCards= document.getElementById("matchingCards");
-let name = prompt("Hello there, please enter your name:")
-let shuffleCards=document.getElementById("shuffleCards")
+let name = prompt("Hello there, please enter your name:");
+let shuffleCards=document.getElementById("shuffleCards");
+let speakerOn=document.querySelector(".speakerOn");
+let speakerOff=document.querySelector(".speakerOff");
+let speaker=document.querySelector(".speaker")
 /*----- event listeners -----*/
 
 backPile.addEventListener("click", backPileFun);
@@ -60,17 +64,15 @@ top2.addEventListener("click", clickingCards);
 top3.addEventListener("click", clickingCards);
 top4.addEventListener("click", clickingCards);
 winCar.addEventListener("click",winningArr);
-
-// main.addEventListener("click", startingTime);
+speaker.addEventListener("click", muteSpeaker);
 
 /*----- calling functions -----*/
-let music=h1.textContent="Welcome to Solitaire, " + name;
-if(music){
+let m=h1.textContent="Welcome to Solitaire, " + name;
+if(m){
   shuffleCards.play();
-
 }
 dealing(newDeck);
-
+// speaker.classList.add("speakerOn");
 
 
 /*----- functions -----*/
@@ -299,6 +301,8 @@ function gettingTheSuitsValue(clickedCard){
          moveFun()
        // using middle row cards
      }else if(previousPosition.value != 0) {
+       console.log("here");
+       currentPosition.clickedCard1.classList.add("shortCards")
         y.removeChild(z);
         x.appendChild(z);
         moveFun()
@@ -330,21 +334,16 @@ function gettingTheSuitsValue(clickedCard){
     else if(previousPosition.charSuit===currentPosition.charSuit){
       stocking(previousPosition, currentPosition);
     }
-    // // from foundation cards to middle rows
-    // else if(previousPosition.clickedCard1.contains("stock")){
-    //   foundationToMR(z,x)
-    //   moveFun()
-    // }
   }
 
   function dealingFromTLtoMR(z,x){
-  // if(z.classList.contains("frontPile"))
     let shiftedVal = frontPile.shift();
     let shiftedSuit= suits(shiftedVal);
     let li = document.createElement('li');
     li.classList.add(shiftedSuit);
     li.classList.add("card");
     x.appendChild(li);
+    currentPosition.clickedCard1.classList.add("shortCards")
     frontPileClass.classList.remove(shiftedSuit)
     frontPileClass.classList.add(suits(frontPile[0]));
     moveFun()
@@ -363,6 +362,7 @@ function foundationToMR(z,x){
   z.classList.remove(shiftedVal);
   let oldClass= shiftedVal.slice(0,1)+(shiftedVal.substring(1)-1)
   z.classList.add(oldClass);
+  currentPosition.clickedCard1.classList.add("shortCards")
 }
 
 // filipping the middleRow cards
@@ -466,12 +466,36 @@ function winning(){
        newDeck = shuffle(newDeck);
         dealing(newDeck)
         topDeck=newDeck.slice(28);
-
-
     }
+
+// sound on and off
+function muteSpeaker(evt){
+  let clickIcon=evt.target;
+  console.log("in mute func");
+    if(clickIcon.classList.contains("speakerOn")){
+      clickIcon.classList.remove("speakerOn");
+      clickIcon.classList.add("speakerOff")
+      // clickIcon.style.visibility = "hidden";
+      // speakerOff.style.visibility = "visible";
+      console.log("in music false");
+      music=false;
+    } else if(clickIcon.classList.contains("speakerOff")){
+      clickIcon.classList.remove("speakerOff");
+      clickIcon.classList.add("speakerOn")
+      console.log("in music true");
+      // clickIcon.style.visibility = "hidden";
+      // speakerOn.style.visibility = "visible"
+      music=true;
+    }
+  return music;
+}
 // count the number of moves
     function moveFun(){
+      if(music){
       matchingCards.play();
+    } else{
+      matchingCards.puase();
+    }
       move++;
       console.log(move);
       if(move==1){

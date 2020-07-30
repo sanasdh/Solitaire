@@ -33,13 +33,27 @@ h1{
   grid-template-columns: repeat(4, auto); */
   /* justify-content: flex-end; */
 }
+.speakerOn{
+  content:url("imgs/speakerOn.svg")
+}
+.speakerOff{
+  content:url("imgs/speakerOff.svg")
+}
+.speaker{
+  width:50px;
+  margin: 100px auto 20px auto;
+}
+.speaker:hover{
+  opacity: 0.5;
+
+}
 .time{
   /* grid-column: 1/2; */
   margin: 20px auto;
 }
 .moves{
   /* grid-column: 2/3; */
-  margin: 100px auto 20px auto;
+  margin: 20px auto;
 }
 .winCar{
   /* grid-column: 3/4; */
@@ -129,7 +143,10 @@ li{
 .borderr{
   border: 2px solid red;
 }
+.shortCards{
+  margin-bottom:-80px;
 
+}
 /*
 @media query (min-width: 600){
   .firstow{
