@@ -14,6 +14,8 @@ let frontPile=[];
 let hasClickedCard=false;
 let previousPosition,currentPosition,clickedCard1;
 let arr=[];
+let newDeck= init();
+let topDeck=newDeck.slice(28);
 
 /*----- cached element references -----*/
 
@@ -38,12 +40,9 @@ let top4 = document.querySelector(".top4");
 let stock= document.querySelector(".stock");
 let winCar = document.querySelector(".winCar");
 let h1= document.querySelector("h1")
-let newDeck= init();
-let topDeck=newDeck.slice(28);
-console.log("topdeck");
-console.log(topDeck);
+let matchingCards= document.getElementById("matchingCards");
 let name = prompt("Hello there, please enter your name:")
-h1.textContent="Welcome to Solitaire, " + name
+let shuffleCards=document.getElementById("shuffleCards")
 /*----- event listeners -----*/
 
 backPile.addEventListener("click", backPileFun);
@@ -65,8 +64,8 @@ winCar.addEventListener("click",winningArr);
 // main.addEventListener("click", startingTime);
 
 /*----- calling functions -----*/
-
-
+shuffleCards.play();
+h1.textContent="Welcome to Solitaire, " + name
 dealing(newDeck);
 
 
@@ -469,6 +468,7 @@ function winning(){
     }
 // count the number of moves
     function moveFun(){
+      matchingCards.play();
       move++;
       console.log(move);
       if(move==1){
