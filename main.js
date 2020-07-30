@@ -64,8 +64,11 @@ winCar.addEventListener("click",winningArr);
 // main.addEventListener("click", startingTime);
 
 /*----- calling functions -----*/
-h1.textContent="Welcome to Solitaire, " + name
-shuffleCards.play();
+let music=h1.textContent="Welcome to Solitaire, " + name;
+if(music){
+  shuffleCards.play();
+
+}
 dealing(newDeck);
 
 
