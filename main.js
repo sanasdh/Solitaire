@@ -46,7 +46,8 @@ let name = prompt("Hello there, please enter your name:");
 let shuffleCards=document.getElementById("shuffleCards");
 let speakerOn=document.querySelector(".speakerOn");
 let speakerOff=document.querySelector(".speakerOff");
-let speaker=document.querySelector(".speaker")
+let speaker=document.querySelector(".speaker");
+let cheering=document.getElementById("cheering");
 /*----- event listeners -----*/
 
 backPile.addEventListener("click", backPileFun);
@@ -428,8 +429,10 @@ function winning(){
   if((top1.classList.contains("d13")) && (top2.classList.contains("c13")) &&
     (top3.classList.contains("h13")) && (top4.classList.contains("s13")) ){
     console.log("you won");
+
     alert(`congratulations you won in ${move} moves`)
    confetti.start();
+   cheering.play();
   }
   else {
     return;
@@ -493,8 +496,6 @@ function muteSpeaker(evt){
     function moveFun(){
       if(music){
       matchingCards.play();
-    } else{
-      matchingCards.puase();
     }
       move++;
       console.log(move);

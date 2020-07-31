@@ -7,13 +7,14 @@
     <meta name="viewport" content="width=device-width">
     <title>Solitaire game</title>
     <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="card-deck-css/css/cardstarter.min.css">
     <link href="style.css" rel="stylesheet" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
     <script defer src="main.js"> </script>
-<script src="https://cdn.jsdelivr.net/gh/mathusummut/confetti.js/confetti.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mathusummut/confetti.js/confetti.min.js"></script>
   </head>
 
 <body>
@@ -23,12 +24,14 @@
   <audio hidden id="matchingCards">
     <source src="audio/matchCards.wav" type="audio/ogg">
   </audio>
+  <audio hidden id="cheering">
+    <source src="audio/cheering.wav" type="audio/ogg">
+  </audio>
     <header>
       <h1> Welcome to Solitaire</h1>
     </header>
     <div class="side">
       <img class="speaker speakerOn">
-      <!-- <img src="imgs/speakerOff.svg"  class="speaker speakerOff"> -->
       <div class="moves">Moves: 0</div>
       <div class="time">Time: 00:00:00</div>
       <div id="winCar">
