@@ -68,11 +68,10 @@ winCar.addEventListener("click",winningArr);
 speaker.addEventListener("click", muteSpeaker);
 
 /*----- calling  -----*/
-if(m==null){
- m=h1.textContent="Welcome to Solitaire, ";
+if(name===null){
+ m=h1.textContent="Welcome to Solitaire";
 }else{
   m=h1.textContent="Welcome to Solitaire, " + name;
-
 }
 if(m){
   shuffleCards.play();
