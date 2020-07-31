@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 
 <html>
   <head>
@@ -5,20 +6,37 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Solitaire game</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="card-deck-css/css/cardstarter.min.css">
+    <link href="style.css" rel="stylesheet" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
     <script defer src="main.js"> </script>
-
+    <script src="https://cdn.jsdelivr.net/gh/mathusummut/confetti.js/confetti.min.js"></script>
   </head>
 
 <body>
-  <div class="main">
-    <div class="footer">
-      <div class="time">Time: 00:00:00</div>
+  <audio hidden id="shuffleCards">
+    <source src="audio/shuffling-cards-1.wav" type="audio/ogg">
+  </audio>
+  <audio hidden id="matchingCards">
+    <source src="audio/matchCards.wav" type="audio/ogg">
+  </audio>
+  <audio hidden id="cheering">
+    <source src="audio/cheering.wav" type="audio/ogg">
+  </audio>
+    <header>
+      <h1> Welcome to Solitaire</h1>
+    </header>
+    <div class="side">
+      <img class="speaker speakerOn">
       <div class="moves">Moves: 0</div>
+      <div class="time">Time: 00:00:00</div>
+      <div id="winCar">
+        <button class="winCar"> Winning Cards </button>
+      </div>
       <div id="resetBtn">
         <button class="resetBtn"> Reset Button </button>
       </div>
@@ -31,6 +49,7 @@
     <div class="card stock top2 fifth c0"></div>
     <div class="card stock top3 sixth h0"></div>
     <div class="card stock top4 seventh s0"></div>
+
   </div>
 
   <div class="middleRow">
@@ -42,7 +61,7 @@
     <div class="em large sixth sixthMR"><ul></ul></div>
     <div class="em large seventh seventhMR"><ul></ul></div>
   </div>
-</div>
+
 
 
 </body>

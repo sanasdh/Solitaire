@@ -1,12 +1,67 @@
 body{
-  display: flex;
-  /* grid-template-columns: repeat(7, 1fr); */
-  /* grid-template-rows: 30% 60% 10%; */
-  justify-content: space-between;
-  flex-direction: column;
-  width: 100vw;
-  background-color: #168444;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto auto;
+  background-image: radial-gradient(circle, #27AE60, #229954, #145A32);
+  background-size: cover;
   text-align: center;
+  font-family: 'Alegreya Sans', sans-serif;
+  font-size: 18px;
+}
+/* header */
+header{
+  grid-row: 1/2;
+  grid-column: 1/3;
+}
+h1{
+  font-family: 'Bubblegum Sans', cursive;
+  text-shadow: 3px 3px #616A6B ;
+  color: #F7F9F9;
+  font-size: 48px;
+
+}
+
+
+/* side */
+.side{
+  grid-row: 1/4;
+  grid-column: 2/3;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  margin: 0 auto;
+}
+.speakerOn{
+  content:url("imgs/speakerOn.svg")
+}
+.speakerOff{
+  content:url("imgs/speakerOff.svg")
+}
+.speaker{
+  width:50px;
+  margin: 100px auto 20px auto;
+}
+.speaker:hover{
+  opacity: 0.5;
+
+}
+.time{
+  margin: 20px auto;
+}
+.moves{
+  margin: 20px auto;
+}
+.winCar{
+  margin: 20px auto;
+  width: 120px;
+}
+.resetBtn{
+  margin: 20px auto;
+  width: 120px;
+}
+button{
+  font-family: 'Alegreya Sans', sans-serif;
+  font-size: 18px;
 }
 
 /* Top Row */
@@ -15,14 +70,24 @@ body{
   display: grid;
   grid-template-columns: repeat(7, 125px);
   grid-template-rows: auto;
-  grid-column: 1/8;
-  grid-row: 1/2;
+  grid-column: 1/2;
+  grid-row: 2/3;
   text-align: center;
-  margin-left: 50px;
-  /* justify-content: center; */
-
+  margin-left: 90px;
 }
-
+.frontPile{
+  margin: 0 auto;
+  padding: 0 auto;
+}
+.backPile{
+  margin: 0 auto;
+  padding: 0 auto;
+}
+.stock{
+  text-align: center;
+  margin: 0 auto;
+  padding: 0 auto;
+}
 .top1{
   text-align: center;
   margin: 0 auto;
@@ -56,12 +121,10 @@ body{
   display: grid;
   grid-template-columns: repeat(7, 125px);
   grid-template-rows: auto;
-  grid-column: 1/8;
-  grid-row: 2/3;
+  grid-column: 1/2;
+  grid-row: 3/4;
   text-align: center;
   margin: 0 auto;
-  height: 670px;
-  /* justify-content: center; */
 }
 .card.is-flipped {
   transform: rotateY(180deg);
@@ -69,28 +132,19 @@ body{
 
 ul{
   list-style-type:none;
+  padding-left: 0;
+}
+li{
+  padding:0;
+  margin: 0;
+  margin-bottom:-5px;
 }
 .borderr{
   border: 2px solid red;
 }
-/* footer */
-.footer{
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  color: white;
-  margin: 0 auto;
-  justify-content: flex-end;
-}
-.time{
-  grid-column: 1/2;
-  margin: 0 50px;
-}
-.moves{
-  grid-column: 2/3;
-  margin: 0 50px;}
-.resetBtn{
-  grid-column: 3/4;
-  margin: 0 40px;
+.shortCards{
+  margin-bottom:-80px;
+
 }
 /*
 @media query (min-width: 600){
