@@ -369,33 +369,34 @@ function filippingMR(y){
 
 // building the 4 foundation cards
 function stocking(previousPosition, currentPosition){
-
-  let curVal=currentPosition.value;
-  let preVal=parseInt(previousPosition.value)-1;
-  if(curVal==preVal){
-    let z =previousPosition.clickedCard1;
-    let x =currentPosition.clickedCard1;
-    if(z.classList.contains("frontPile")){
-      let shiftedVal = frontPile.shift();
-      let shiftedSuit= suits(shiftedVal);
-      frontPileClass.classList.remove(shiftedSuit)
-      frontPileClass.classList.add(suits(frontPile[0]));
-      x.classList.remove(currentPosition.wholeClass);
-      x.classList.add(shiftedSuit);
-      moveFun()
-      return frontPile;
+  if(currentPosition.clickedCard1.classList.contains("stock")){
+    let curVal=currentPosition.value;
+    let preVal=parseInt(previousPosition.value)-1;
+    if(curVal==preVal){
+      let z =previousPosition.clickedCard1;
+      let x =currentPosition.clickedCard1;
+      if(z.classList.contains("frontPile")){
+        let shiftedVal = frontPile.shift();
+        let shiftedSuit= suits(shiftedVal);
+        frontPileClass.classList.remove(shiftedSuit)
+        frontPileClass.classList.add(suits(frontPile[0]));
+        x.classList.remove(currentPosition.wholeClass);
+        x.classList.add(shiftedSuit);
+        moveFun()
+        return frontPile;
+        }
+        else{
+        let y =z.parentElement; //ul
+        let child=previousPosition.clickedCard1;
+        x.classList.remove(currentPosition.wholeClass);
+        x.classList.add(previousPosition.wholeClass);
+        y.classList.remove(previousPosition.wholeClass);
+        y.removeChild(child);
+        moveFun()
+        filippingMR(y)
       }
-      else{
-      let y =z.parentElement; //ul
-      let child=previousPosition.clickedCard1;
-      x.classList.remove(currentPosition.wholeClass);
-      x.classList.add(previousPosition.wholeClass);
-      y.classList.remove(previousPosition.wholeClass);
-      y.removeChild(child);
-      moveFun()
-      filippingMR(y)
-    }
-}
+  }
+ }
 }
 
 // moving the face up card and all the underneath li's
