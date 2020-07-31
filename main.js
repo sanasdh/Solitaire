@@ -3,7 +3,7 @@
 
 /*----- app's state (variables) -----*/
 let cards; // (0,12) diamonds, (13,25) hearts, (26,38) spades, (39,51) clubs
-let deck,b,d;
+let deck,b,d,m;
 let move=0;
 let timer = [0,0,0,0];
 let interval;
@@ -68,7 +68,12 @@ winCar.addEventListener("click",winningArr);
 speaker.addEventListener("click", muteSpeaker);
 
 /*----- calling  -----*/
-let m=h1.textContent="Welcome to Solitaire, " + name;
+if(m==null){
+ m=h1.textContent="Welcome to Solitaire, ";
+}else{
+  m=h1.textContent="Welcome to Solitaire, " + name;
+
+}
 if(m){
   shuffleCards.play();
 }
