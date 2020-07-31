@@ -1,6 +1,6 @@
-#Solitaire
+# Solitaire
 
-##Description
+## Description
 The goal of this game is to make 4 foundation part ( 1 per suit) from Ace to King. Player can only move the faced-up cards and locate them:
 1)underneath another card if the other card is (adding an event listener with “click”):
 	1.1) different color (black or red)
@@ -9,20 +9,20 @@ The goal of this game is to make 4 foundation part ( 1 per suit) from Ace to Kin
 After moving the card, the player can flip the face down card and use it. If a column gets empty, only a king card can fill it.
 The player can flip one card at the time from the piles of card on the top left corner, and use it like a normal faced up card.
 
-##Screenshots of Game
+## Screenshots of Game
 ![alt beginning of the game](imgs/first.png)
 ![alt end of the game](imgs/end.png)
 
-##technologies used
+## technologies used
 * HTML
 * CSS
 * JavaScript
 
-##Getting Started
+## Getting Started
 please click on this link to start the game:
 [Solitaire](https://sanasdh.github.io/Solitaire/index.html)
 
-##Planning For Future enhancement
+## Planning For Future enhancement
 1. Adding the dragging function instead of clicking the first and second card
 2. Adding animation when a card is filliping
 
