@@ -11,8 +11,8 @@ The player can flip one card at the time from the piles of card on the top left 
 
 ## Screenshots of Game
 
-![Alt Beginning of the game](/imgs/first.png)
-![Alt End of the game](/imgs/end.png)
+![Alt Beginning of the game](./imgs/first.png)
+![Alt End of the game](./imgs/end.png)
 
 ## technologies used
 * HTML
@@ -26,5 +26,6 @@ please click on this link to start the game:
 ## Planning For Future enhancement
 1. Adding the dragging function instead of clicking the first and second card
 2. Adding animation when a card is filliping
+3. Adding an Undo button
 
 
