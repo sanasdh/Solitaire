@@ -11,8 +11,8 @@ The player can flip one card at the time from the piles of card on the top left 
 
 ## Screenshots of Game
 
-![Alt Beginning of the game](./imgs/first.png)
-![Alt End of the game](./imgs/end.png)
+![Alt Beginning of the game](./imgs./first.png)
+![Alt End of the game](./imgs./end.png)
 
 ## technologies used
 * HTML
