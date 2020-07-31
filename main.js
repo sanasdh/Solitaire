@@ -239,10 +239,13 @@ function clickingCards(evt){
   } else if(hasClickedCard){
       previousPosition.clickedCard1.classList.remove("outline")
       currentPosition = new SingleCard(b.slice(0,1), b.substring(1), evt.target, b);
-      compare(previousPosition, currentPosition);
-      hasClickedCard=false;
-      previousPosition=undefined;
-      currentPosition=undefined;
+      if(!currentPosition.clickedCard1.classList.contains("frontPile")){
+
+        compare(previousPosition, currentPosition);
+        hasClickedCard=false;
+        previousPosition=undefined;
+        currentPosition=undefined;
+    }
 }
   winning();
   return push, charSuit, value;
@@ -441,6 +444,14 @@ function winning(){
 
 // Reset everything:
     function reset() {
+      console.log("dob");
+      console.log(top1.classList);
+      console.log("c0b");
+      console.log(top2.classList);
+      console.log("hob");
+      console.log(top3.classList);
+      console.log("frontPileClass bb");
+      console.log(frontPileClass.classList);
         clearInterval(interval);
         interval = null;
         timer = [0,0,0,0];
@@ -450,22 +461,34 @@ function winning(){
         moveCards.innerHTML = "Moves: 0";
         deck=null;
         ul.forEach(function(singleUL){
-        singleUL.textContent=""
+        singleUL.textContent="";
       });
-      let a = frontPileClass.classList[3]
-      frontPileClass.classList.remove(a)
-      let top1class= top1.classList[5];
-      top1.classList.remove(top1class);
-      top1.classList.add("d0");
-      let top2class= top2.classList[5];
-      top2.classList.remove(top2class);
-      top2.classList.add("c0");
-      let top3class= top3.classList[5];
-      top3.classList.remove(top3class);
-      top3.classList.add("h0");
-      let top4class= top4.classList[5];
-      top4.classList.remove(top4class);
-      top4.classList.add("s0");
+      if(!top1.classList.contains("d0")){
+        top1.classList.remove(top1.classList[4])
+        top1.classList.add("d0")
+      }
+      if(!top2.classList.contains("c0")){
+        top2.classList.remove(top2.classList[4])
+        top2.classList.add("c0")
+      }
+      if(!top3.classList.contains("h0")){
+        top3.classList.remove(top3.classList[4])
+        top3.classList.add("h0")
+      }
+      if(!top4.classList.contains("h0")){
+        top4.classList.remove(top4.classList[4])
+        top4.classList.add("s0")
+      }
+      frontPileClass.classList.remove(frontPileClass.classList[3])
+      console.log("do");
+      console.log(top1.classList);
+      console.log("c0");
+      console.log(top2.classList);
+      console.log("ho");
+      console.log(top3.classList);
+      console.log("frontPileClass");
+      console.log(frontPileClass.classList);
+
        newDeck = shuffle(newDeck);
         dealing(newDeck)
         topDeck=newDeck.slice(28);
@@ -474,20 +497,13 @@ function winning(){
 // sound on and off
 function muteSpeaker(evt){
   let clickIcon=evt.target;
-  console.log("in mute func");
     if(clickIcon.classList.contains("speakerOn")){
       clickIcon.classList.remove("speakerOn");
       clickIcon.classList.add("speakerOff")
-      // clickIcon.style.visibility = "hidden";
-      // speakerOff.style.visibility = "visible";
-      console.log("in music false");
       music=false;
     } else if(clickIcon.classList.contains("speakerOff")){
       clickIcon.classList.remove("speakerOff");
       clickIcon.classList.add("speakerOn")
-      console.log("in music true");
-      // clickIcon.style.visibility = "hidden";
-      // speakerOn.style.visibility = "visible"
       music=true;
     }
   return music;
